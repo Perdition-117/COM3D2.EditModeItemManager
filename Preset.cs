@@ -42,27 +42,4 @@ partial class ItemManager {
 
 		PresetPanelUpdated?.Invoke(typeof(ItemManager), EventArgs.Empty);
 	}
-
-	// hack to prevent cells from getting resized due to added size from the added components
-	[HarmonyPatch(typeof(PresetCtrl), nameof(PresetCtrl.AdjustTargetPosition))]
-	[HarmonyPrefix]
-	private static void PresetCtrl_PreAdjustTargetPosition(PresetCtrl __instance, ref Dictionary<IOverlay, bool> __state) {
-		__state = new();
-		foreach (var button in __instance.m_dicPresetButton.Values) {
-			if (OverlayContainer.TryGetContainer(button.presetButton, out var container)) {
-				foreach (var overlay in container.Overlays) {
-					__state.Add(overlay, overlay.Active);
-					overlay.Active = false;
-				}
-			}
-		}
-	}
-
-	[HarmonyPatch(typeof(PresetCtrl), nameof(PresetCtrl.AdjustTargetPosition))]
-	[HarmonyPostfix]
-	private static void PresetCtrl_PostAdjustTargetPosition(Dictionary<IOverlay, bool> __state) {
-		foreach (var button in __state) {
-			button.Key.Active = button.Value;
-		}
-	}
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.IO;
 using HarmonyLib;
 
@@ -10,11 +9,11 @@ partial class ItemManager {
 	public static event EventHandler<PresetButtonCreatedEventArgs> PresetButtonCreated;
 
 	private static void CheckPresets() {
-		var isInit = DatabaseManager.Database.Presets.Count == 0;
+		var isFirstRun = DatabaseManager.Database.Presets.Count == 0;
 		foreach (var presetFile in GetPresetFiles()) {
 			var fileName = Path.GetFileName(presetFile);
 			if (!DatabaseManager.Database.ContainsPreset(fileName)) {
-				DatabaseManager.Database.AddPreset(fileName, SetUnseenPresets && !isInit);
+				DatabaseManager.Database.AddPreset(fileName, SetUnseenPresets && !isFirstRun);
 			}
 		}
 	}

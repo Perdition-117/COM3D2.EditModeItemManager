@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using BepInEx;
 using HarmonyLib;
@@ -49,7 +49,7 @@ public partial class ItemManager : BaseUnityPlugin {
 
 	private static void CheckNewItems(SceneEdit sceneEdit) {
 		var missingItems = DatabaseManager.Database.ItemDictionary.Keys.ToList();
-		var isInit = DatabaseManager.Database.Items.Count == 0;
+		var isFirstRun = DatabaseManager.Database.Items.Count == 0;
 
 		foreach (var category in sceneEdit.CategoryList) {
 			foreach (var partType in category.m_listPartsType) {
@@ -57,7 +57,7 @@ public partial class ItemManager : BaseUnityPlugin {
 					foreach (var item in partType.m_listMenu) {
 						missingItems.Remove(item.m_strMenuFileName);
 						if (!DatabaseManager.Database.ContainsItem(item.m_strMenuFileName)) {
-							DatabaseManager.Database.AddItem(item.m_strMenuFileName, SetUnseenItems && !isInit);
+							DatabaseManager.Database.AddItem(item.m_strMenuFileName, SetUnseenItems && !isFirstRun);
 						}
 					}
 				}
@@ -66,7 +66,7 @@ public partial class ItemManager : BaseUnityPlugin {
 
 		if (SetUnseenItems) {
 			foreach (var itemName in missingItems) {
-				if (TryGetItem(itemName, out var item)) {
+				if (!GameMain.Instance.CharacterMgr.status.havePartsItems_.ContainsKey(itemName.ToLower()) && TryGetItem(itemName, out var item)) {
 					item.IsNew = true;
 				}
 			}

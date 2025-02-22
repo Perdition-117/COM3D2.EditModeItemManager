@@ -4,8 +4,11 @@
 		<TargetFramework>net35</TargetFramework>
 		<LangVersion>10</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<PropertyGroup>
 		<Product>EditModeItemManager</Product>
-		<Version>1.0.2</Version>
+		<Version>1.1.0</Version>
 		<Authors>Perdition</Authors>
 		<PackageProjectUrl>https://github.com/Perdition-117/COM3D2.EditModeItemManager</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Perdition-117/COM3D2.EditModeItemManager.git</RepositoryUrl>

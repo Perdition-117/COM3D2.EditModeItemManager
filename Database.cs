@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml;
 using System.Xml.Serialization;
@@ -25,6 +25,9 @@ public class Database {
 		[XmlAttribute]
 		[DefaultValue(false)]
 		public bool IsNew { get; set; }
+		[XmlAttribute]
+		[DefaultValue(false)]
+		public bool IsHidden { get; set; }
 	}
 
 	internal void AddItem(string fileName, bool isNew) {
